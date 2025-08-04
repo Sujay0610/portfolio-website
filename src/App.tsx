@@ -358,24 +358,24 @@ function App() {
         </div>
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="mb-8">
-            <h2 className="text-2xl font-bold mb-8 text-white animate-fade-in-up">
+            <h2 className="text-2xl font-bold mb-8 text-white">
               about
             </h2>
-            <p className="text-gray-300 mb-4 text-lg leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <p className="text-gray-300 mb-4 text-lg leading-relaxed">
               tldr; CS student @ PESU | founder of <a href="https://aigentsify.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline hover:glow transition-all duration-300">AIgentsify</a> — an AI automation agency
             </p>
-            <p className="text-gray-300 mb-4 text-lg leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+            <p className="text-gray-300 mb-4 text-lg leading-relaxed">
               i build AI agents and automation workflows, agentic RAG bots. i'm passionate about creating AI products that deliver real-world value
             </p>
-            <p className="text-gray-300 mb-8 text-lg leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+            <p className="text-gray-300 mb-8 text-lg leading-relaxed">
               fascinated by space, science, and ideas that expand the mind.
             </p>
           </div>
 
           {/* Social Links */}
           <div className="mb-8">
-            <h3 className="text-2xl font-bold mb-6 text-white animate-fade-in-up" style={{ animationDelay: '0.8s' }}>socials</h3>
-            <div className="flex space-x-4 animate-fade-in-up" style={{ animationDelay: '1s' }}>
+            <h3 className="text-2xl font-bold mb-6 text-white">socials</h3>
+            <div className="flex space-x-4">
             {[
               { icon: Linkedin, href: 'https://linkedin.com/in/sujaysc06', label: 'LinkedIn' },
               { icon: Github, href: 'https://github.com/Sujay0610', label: 'GitHub' },
