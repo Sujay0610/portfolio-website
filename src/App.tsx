@@ -661,7 +661,7 @@ ${formData.message}`;
             {[
               { icon: Linkedin, href: 'https://linkedin.com/in/sujaysc06', label: 'LinkedIn' },
               { icon: Github, href: 'https://github.com/Sujay0610', label: 'GitHub' },
-              { icon: Twitter, href: 'https://twitter.com/sujaysc06', label: 'Twitter' },
+              { icon: Twitter, href: 'https://x.com/sujaysc_', label: 'Twitter' },
               { icon: Mail, href: 'mailto:sujay0610@gmail.com', label: 'Email' }
             ].map(({ icon: Icon, href, label }) => (
               <a
