@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import emailjs from '@emailjs/browser';
 import { 
   Github, 
   Linkedin, 
@@ -24,7 +25,10 @@ import {
   Settings,
   Globe,
   Shield,
-  Cpu
+  Cpu,
+  X,
+  Send,
+  Clock
 } from 'lucide-react';
 
 // Skill Icons Component
@@ -131,6 +135,19 @@ function App() {
   const [cursorTrail, setCursorTrail] = useState<Array<{ x: number; y: number; id: number }>>([]);
   const heroRef = useRef<HTMLDivElement>(null);
 
+  // Form state management
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    message: '',
+    preferredTime: '',
+    projectType: ''
+  });
+
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 300);
@@ -175,6 +192,106 @@ function App() {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // Form handling functions
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Handle escape key to close modal
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowBookingModal(false);
+      }
+    };
+
+    if (showBookingModal) {
+      document.addEventListener('keydown', handleEscape);
+      return () => document.removeEventListener('keydown', handleEscape);
+    }
+  }, [showBookingModal]);
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      // EmailJS configuration from environment variables
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      // Check if EmailJS is configured
+      if (!serviceId || !templateId || !publicKey) {
+        console.warn('EmailJS not configured, falling back to mailto');
+        // Fallback to mailto if EmailJS is not configured
+        const emailBody = `New Call Booking Request
+
+Name: ${formData.name}
+Email: ${formData.email}
+Company: ${formData.company || 'Not specified'}
+Project Type: ${formData.projectType || 'Not specified'}
+Preferred Time: ${formData.preferredTime || 'Not specified'}
+
+Message:
+${formData.message}`;
+
+        const mailtoLink = `mailto:sujay0610@gmail.com?subject=Call Booking Request from ${formData.name}&body=${encodeURIComponent(emailBody)}`;
+        window.open(mailtoLink, '_blank');
+        setSubmitStatus('success');
+      } else {
+        // Send email directly to your email using EmailJS
+        // Create the email parameters
+        const emailParams = {
+          to_name: 'Sujay',
+          to_email: 'sujay0610@gmail.com',
+          from_name: formData.name,
+          from_email: formData.email,
+          reply_to: formData.email,
+          subject: `Call Booking Request from ${formData.name}`,
+          company: formData.company || 'Not specified',
+          project_type: formData.projectType || 'Not specified', 
+          preferred_time: formData.preferredTime || 'Not specified',
+          message: formData.message
+        };
+
+        // Send email using EmailJS
+        await emailjs.send(
+          serviceId,
+          templateId,
+          emailParams,
+          publicKey
+        );
+        setSubmitStatus('success');
+      }
+
+      // Reset form after a delay to show success message
+      setTimeout(() => {
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          message: '',
+          preferredTime: '',
+          projectType: ''
+        });
+        setShowBookingModal(false);
+        setSubmitStatus('idle');
+      }, 2000);
+
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -284,13 +401,171 @@ function App() {
     {
       company: 'Freelance', 
       role: 'AI & Automation Developer',
-      period: 'Aug 2023 – May 2024',
+      period: 'Aug 2024 – Present',
       description: 'Delivered scalable lead-gen, API-driven solutions for startups and B2B clients.'
     }
   ];
 
   return (
     <div className="min-h-screen bg-black text-gray-100 relative overflow-x-hidden">
+      {/* Book a Call Modal */}
+      {showBookingModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-gray-900 rounded-2xl border border-gray-800 w-full max-w-md relative">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-800">
+              <h3 className="text-xl font-semibold text-white">Book a Call</h3>
+              <button
+                onClick={() => setShowBookingModal(false)}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Modal Form */}
+            <form onSubmit={handleFormSubmit} className="p-6 space-y-4">
+              {/* Status Messages */}
+              {submitStatus === 'success' && (
+                <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4 text-green-300 text-sm">
+                  ✅ Thank you! Your call booking request has been sent successfully. I'll get back to you within 24 hours.
+                </div>
+              )}
+              {submitStatus === 'error' && (
+                <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4 text-red-300 text-sm">
+                  ❌ There was an error sending your request. Please try again or email me directly at sujay0610@gmail.com
+                </div>
+              )}
+              
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                  Name *
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  placeholder="Your full name"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                  Email *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  placeholder="your@email.com"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="company" className="block text-sm font-medium text-gray-300 mb-2">
+                  Company
+                </label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  placeholder="Your company (optional)"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="projectType" className="block text-sm font-medium text-gray-300 mb-2">
+                  Project Type
+                </label>
+                <select
+                  id="projectType"
+                  name="projectType"
+                  value={formData.projectType}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                >
+                  <option value="">Select a project type</option>
+                  <option value="AI Automation">AI Automation</option>
+                  <option value="RAG Chatbot">RAG Chatbot</option>
+                  <option value="Full-Stack Development">Full-Stack Development</option>
+                  <option value="API Development">API Development</option>
+                  <option value="Consultation">Consultation</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="preferredTime" className="block text-sm font-medium text-gray-300 mb-2">
+                  Preferred Time
+                </label>
+                <input
+                  type="text"
+                  id="preferredTime"
+                  name="preferredTime"
+                  value={formData.preferredTime}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  placeholder="e.g., Next week, Tuesday 2-4 PM IST"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                  Message *
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  rows={4}
+                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 resize-none"
+                  placeholder="Tell me about your project and what you'd like to discuss..."
+                />
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowBookingModal(false)}
+                  className="flex-1 px-4 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send size={16} />
+                      <span>Send Request</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
       {/* Simplified Background */}
       <div className="fixed inset-0 z-0">
         {/* Enhanced mouse follower gradient */}
@@ -552,14 +827,14 @@ function App() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-            <a
-              href="#"
+            <button
+              onClick={() => setShowBookingModal(true)}
               className="group flex items-center space-x-3 bg-white hover:bg-gray-200 text-black px-8 py-4 rounded-xl font-medium transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-white/20 relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <Calendar size={20} className="relative z-10" />
               <span className="relative z-10">Book a Call</span>
-            </a>
+            </button>
             <a
               href="mailto:sujay0610@gmail.com"
               className="group flex items-center space-x-3 bg-gray-900/80 backdrop-blur-sm hover:bg-gray-800/80 text-gray-100 px-8 py-4 rounded-xl font-medium transition-all duration-300 border border-gray-800 hover:border-gray-600 hover:scale-105 hover:shadow-xl hover:shadow-blue-500/20 glass relative overflow-hidden"
