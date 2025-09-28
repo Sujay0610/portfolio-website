@@ -324,7 +324,7 @@ ${formData.message}`;
         'Zapier/n8n integrations for automation triggers'
       ],
       tags: ['LeadGen', 'AI', 'Supabase', 'Cold Email'],
-      links: { demo: '#', github: '#' }
+      links: { demo: 'https://leadgen-v1.netlify.app/', github: 'https://github.com/Sujay0610/Leadgen-v1' }
     },
     {
       title: 'Real-Time Intrusion Detection AI Agent',
@@ -335,7 +335,7 @@ ${formData.message}`;
         'Research paper in progress on performance and detection pipeline'
       ],
       tags: ['Suricata', 'DPDK', 'Machine Learning', 'Cybersecurity'],
-      links: { github: '#' }
+      links: { }
     },
     {
       title: 'Agentic RAG Chatbot for Manufacturing Automation',
@@ -346,7 +346,7 @@ ${formData.message}`;
         'Responsive UI for document upload and chat'
       ],
       tags: ['RAG', 'ERP', 'LangChain', 'CrewAI', 'Vector DB'],
-      links: { demo: '#' }
+      links: { demo: 'https://mechgptv1.netlify.app/', github: 'https://github.com/Sujay0610/MechGPT-v1.3' }
     },
     {
       title: 'GiftFulfill API Platform',
@@ -357,7 +357,7 @@ ${formData.message}`;
         'Zapier & n8n integration with service automation'
       ],
       tags: ['FastAPI', 'API', 'Automation', 'SDKs', 'Zapier'],
-      links: { demo: '#', github: '#' }
+      links: { demo: 'https://giftlib.netlify.app/', github: 'https://github.com/Sujay0610/GiftLib-react' }
     },
     {
       title: 'Hotel Recommendation Chatbot (RAG‑Enabled)',
@@ -367,11 +367,18 @@ ${formData.message}`;
         'RAG pipeline retrieves contextually relevant info from hotel data'
       ],
       tags: ['RAG', 'Streamlit', 'NLP', 'OpenRouter'],
-      links: { demo: '#' }
+      links: { github: 'https://github.com/Sujay0610/Hotel-Recommendation-Bot-for-India' }
     }
   ];
 
   const experiences = [
+    {
+      company: '4Good.AI',
+      role: 'Software Development Engineer Intern',
+      period: 'Sep 2025 – Current',
+      description: 'Developing AI-powered solutions and software systems for social impact initiatives.',
+      link: 'https://4gd.ai'
+    },
     {
       company: 'Starlly Solutions Pvt Ltd',
       role: 'AI and Automation Engineer Intern',
@@ -637,10 +644,10 @@ ${formData.message}`;
               about
             </h2>
             <p className="text-gray-300 mb-4 text-lg leading-relaxed">
-              tldr; CS student @ PESU | founder of <a href="https://aigentsify.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline hover:glow transition-all duration-300">AIgentsify</a> — an AI automation agency
+              tldr; Full-stack and AI Engineer | CS student @ PESU | founder of <a href="https://aigentsify.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline hover:glow transition-all duration-300">AIgentsify</a> — an AI automation agency
             </p>
             <p className="text-gray-300 mb-4 text-lg leading-relaxed">
-              i build AI agents and automation workflows, agentic RAG bots. i'm passionate about creating AI products that deliver real-world value
+              i build full-stack applications, AI agents, and automation workflows. specializing in agentic RAG systems, API development, and scalable AI products that deliver real-world value
             </p>
             <p className="text-gray-300 mb-8 text-lg leading-relaxed">
               fascinated by space, science, and ideas that expand the mind.
