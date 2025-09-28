@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import emailjs from '@emailjs/browser';
+import giftlibImage from './assests/images/giftlib.png';
+import leadgenImage from './assests/images/Lead-gen.png';
+import mechChatbotImage from './assests/images/mech-chatbot.png';
+import hotelRecommImage from './assests/images/hotel-recomm.png';
+import realtimeIDSImage from './assests/images/RealtimeIDSagent.png';
 import { 
   Github, 
   Linkedin, 
@@ -324,7 +329,8 @@ ${formData.message}`;
         'Zapier/n8n integrations for automation triggers'
       ],
       tags: ['LeadGen', 'AI', 'Supabase', 'Cold Email'],
-      links: { demo: 'https://leadgen-v1.netlify.app/', github: 'https://github.com/Sujay0610/Leadgen-v1' }
+      links: { demo: 'https://leadgen-v1.netlify.app/', github: 'https://github.com/Sujay0610/Leadgen-v1' },
+      image: leadgenImage
     },
     {
       title: 'Real-Time Intrusion Detection AI Agent',
@@ -335,7 +341,8 @@ ${formData.message}`;
         'Research paper in progress on performance and detection pipeline'
       ],
       tags: ['Suricata', 'DPDK', 'Machine Learning', 'Cybersecurity'],
-      links: { }
+      links: { },
+      image: realtimeIDSImage
     },
     {
       title: 'Agentic RAG Chatbot for Manufacturing Automation',
@@ -346,7 +353,8 @@ ${formData.message}`;
         'Responsive UI for document upload and chat'
       ],
       tags: ['RAG', 'ERP', 'LangChain', 'CrewAI', 'Vector DB'],
-      links: { demo: 'https://mechgptv1.netlify.app/', github: 'https://github.com/Sujay0610/MechGPT-v1.3' }
+      links: { demo: 'https://mechgptv1.netlify.app/', github: 'https://github.com/Sujay0610/MechGPT-v1.3' },
+      image: mechChatbotImage
     },
     {
       title: 'GiftFulfill API Platform',
@@ -357,7 +365,8 @@ ${formData.message}`;
         'Zapier & n8n integration with service automation'
       ],
       tags: ['FastAPI', 'API', 'Automation', 'SDKs', 'Zapier'],
-      links: { demo: 'https://giftlib.netlify.app/', github: 'https://github.com/Sujay0610/GiftLib-react' }
+      links: { demo: 'https://giftlib.netlify.app/', github: 'https://github.com/Sujay0610/GiftLib-react' },
+      image: giftlibImage
     },
     {
       title: 'Hotel Recommendation Chatbot (RAG‑Enabled)',
@@ -367,7 +376,8 @@ ${formData.message}`;
         'RAG pipeline retrieves contextually relevant info from hotel data'
       ],
       tags: ['RAG', 'Streamlit', 'NLP', 'OpenRouter'],
-      links: { github: 'https://github.com/Sujay0610/Hotel-Recommendation-Bot-for-India' }
+      links: { github: 'https://github.com/Sujay0610/Hotel-Recommendation-Bot-for-India' },
+      image: hotelRecommImage
     }
   ];
 
@@ -680,43 +690,77 @@ ${formData.message}`;
 
           {/* Skills */}
           <div>
-            <h3 className="text-2xl font-bold mb-6 text-white animate-fade-in-up" style={{ animationDelay: '1.2s' }}>skills</h3>
-            <div className="flex flex-wrap gap-4 animate-fade-in-up" style={{ animationDelay: '1.4s' }}>
-              {skills.map((skill) => (
+            <h3 className="text-2xl font-bold mb-8 text-white animate-fade-in-up" style={{ animationDelay: '1.2s' }}>skills</h3>
+            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-7 lg:grid-cols-8 xl:grid-cols-9 gap-6 animate-fade-in-up justify-items-center max-w-6xl mx-auto" style={{ animationDelay: '1.4s' }}>
+              {skills.map((skill, index) => (
                 <div
                   key={skill.name}
-                  className="group relative flex items-center justify-center w-16 h-16 rounded-xl bg-gray-900 border border-gray-800 transition-all duration-300 hover:scale-110 hover:border-gray-600 cursor-pointer overflow-hidden"
+                  className="group relative w-20 h-20 rounded-xl bg-gray-900 border border-gray-800 transition-all duration-500 hover:scale-125 hover:border-gray-600 hover:rotate-2 cursor-pointer overflow-visible hover:z-10 animate-pulse hover:animate-none"
                   style={{
                     '--skill-color': skill.color,
-                    '--skill-bg': skill.bgColor
+                    '--skill-bg': skill.bgColor,
+                    animationDelay: `${1.6 + index * 0.1}s`,
+                    animationDuration: `${2 + (index % 3) * 0.5}s`
                   } as React.CSSProperties}
                 >
-                  {/* Bloom effect background */}
+                  {/* Enhanced bloom effect background */}
                   <div 
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl"
                     style={{
-                      background: `radial-gradient(circle, ${skill.color}40 0%, transparent 70%)`
+                      background: `radial-gradient(circle, ${skill.color}60 0%, ${skill.color}20 50%, transparent 80%)`
                     }}
                   />
                   
-                  {/* Icon container */}
-                  <div className="relative z-10 transition-transform duration-300 group-hover:scale-110">
-                    <SkillIcon name={skill.name} />
-                  </div>
-                  
-                  {/* Tooltip */}
-                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full mt-2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap z-20 pointer-events-none">
-                    {skill.name}
-                  </div>
-                  
-                  {/* Glow effect */}
+                  {/* Animated background gradient */}
                   <div 
-                    className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-xl"
+                    className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-all duration-500"
+                    style={{
+                      background: `linear-gradient(135deg, ${skill.color}30 0%, transparent 50%, ${skill.color}20 100%)`
+                    }}
+                  />
+                  
+                  {/* Icon container - Perfectly centered */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <div className="relative z-10 transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-1 flex items-center justify-center">
+                      <SkillIcon name={skill.name} />
+                    </div>
+                    
+                    {/* Dynamic skill name - shows below icon on hover */}
+                    <div className="relative z-10 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0 mt-1">
+                      <span 
+                        className="text-xs font-medium text-center leading-tight whitespace-nowrap"
+                        style={{ color: skill.color }}
+                      >
+                        {skill.name}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Enhanced glow effect */}
+                  <div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-all duration-500 rounded-xl"
                     style={{
                       backgroundColor: skill.color,
-                      boxShadow: `0 0 20px ${skill.color}60`
+                      boxShadow: `0 0 30px ${skill.color}80, inset 0 0 20px ${skill.color}20`
                     }}
                   />
+                  
+                  {/* Floating particles effect */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                    {[...Array(3)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="absolute w-1 h-1 rounded-full animate-pulse"
+                        style={{
+                          backgroundColor: skill.color,
+                          left: `${20 + i * 30}%`,
+                          top: `${15 + i * 25}%`,
+                          animationDelay: `${i * 0.3}s`,
+                          animationDuration: '2s'
+                        }}
+                      />
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
@@ -769,12 +813,25 @@ ${formData.message}`;
             {projects.map((project, index) => (
               <div
                 key={project.title}
-                className="group bg-gray-900/80 backdrop-blur-sm rounded-xl p-6 hover:bg-gray-800/80 transition-all duration-500 border border-gray-800 hover:border-gray-600 hover:scale-[1.02] hover:shadow-2xl hover:shadow-teal-500/10 glass relative overflow-hidden"
+                className="group bg-gray-900/80 backdrop-blur-sm rounded-xl hover:bg-gray-800/80 transition-all duration-500 border border-gray-800 hover:border-gray-600 hover:scale-[1.02] hover:shadow-2xl hover:shadow-teal-500/10 glass relative overflow-hidden"
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
                 {/* Animated background gradient */}
                 <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative z-10">
+                
+                {/* Project Image - Full width, top aligned */}
+                {project.image && (
+                  <div className="relative overflow-hidden rounded-t-xl">
+                    <img 
+                      src={project.image} 
+                      alt={project.title}
+                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                )}
+                
+                {/* Content with padding */}
+                <div className="relative z-10 p-6">
                 <h3 className="text-white font-medium mb-3">{project.title}</h3>
                 <p className="text-gray-400 mb-4 text-sm leading-relaxed">{project.description}</p>
                 
